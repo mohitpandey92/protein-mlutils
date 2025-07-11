@@ -1,0 +1,47 @@
+#from proteinmlutils import __version__
+
+#version =0.0.1# __version__
+
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+
+[tool.setuptools.packages.find]
+where = ["src"]
+[tool.setuptools.package-data]
+mypkg = ["*.csv"]
+
+[project]
+name = "proteinmlutils"
+version = "0.0.1"
+dependencies = [
+'matplotlib',
+'pandas',
+'jupyterlab',
+'seaborn',
+'scipy',
+'scikit-learn',
+'tqdm',
+'regex',
+'xgboost>1.7',
+'lightning',
+]
+authors = [
+  { name="Mohit Pandey", email="mpandey@bu.edu" }
+]
+description = "Protein ML Utility Python Package"
+readme = "README.md"
+requires-python = ">=3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/mohitpandey92/protein-mlutils"
+Issues = "https://github.com/mohitpandey92/protein-mlutils/issues"
