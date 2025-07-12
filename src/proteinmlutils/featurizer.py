@@ -101,7 +101,7 @@ def protein_embedding_generator(sequence, max_length=None, embedding_dim=5, flat
         raise ValueError("Sequence must be a string, list, or numpy array")
 
     if flatten: #return the output as a flattened 1D array
-        output=output.reshape(output.shape[0], -1)
+        output=output.reshape(output.shape[0], -1).detach().numpy()
     else:  #return the output as is
         output=output.detach().numpy()
 
