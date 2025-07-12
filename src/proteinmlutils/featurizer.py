@@ -1,4 +1,6 @@
-
+import numpy as np
+import torch
+import torch.nn as nn
 
 def protein_one_hot_encoder(sequence, max_length=None, flatten=True ):
     """
