@@ -19,7 +19,8 @@ def protein_one_hot_encoder(sequence, max_length=None, flatten=True ):
     encoding = {aa: i for i, aa in enumerate(amino_acids)}
 
     if isinstance(sequence, str):
-        assert len(sequence) <= max_length, "Sequence length exceeds max length"
+        if max_length is not None:
+            assert len(sequence) <= max_length, "Sequence length exceeds max length"
         assert all(aa in amino_acids for aa in sequence), "Sequence contains invalid amino acids"
         if (max_length is not None) and len(sequence) < max_length:
             sequence += '_' * (max_length - len(sequence))  # Padding with underscores if needed
