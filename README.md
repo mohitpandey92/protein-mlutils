@@ -1,7 +1,8 @@
 # protein-mlutils
-![Python package](https://img.shields.io/badge/python-3.8%20-blue.svg)
-![PyPI](https://img.shields.io/pypi/v/pymlutils)
+![Python package](https://img.shields.io/badge/python-3.12%20-blue.svg)
+![PyPI](https://img.shields.io/pypi/v/protein_mlutils)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
+
 A Python package for ML utility functions
 
 
