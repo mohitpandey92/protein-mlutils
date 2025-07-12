@@ -1,14 +1,14 @@
 # protein-mlutils
 
-![GitHub](https://img.shields.io/github/license/mohitpandey92/protein-mlutils)
 ![GitHub last commit](https://img.shields.io/github/last-commit/mohitpandey92/protein-mlutils)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/mohitpandey92/protein-mlutils)
 ![GitHub top language](https://img.shields.io/github/languages/top/mohitpandey92/protein-mlutils)
 ![Python package](https://img.shields.io/badge/python-3.12%20-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
+
 ![image](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
 ![image](https://img.shields.io/badge/Lightning-792DE4?style=for-the-badge&logo=lightning&logoColor=white)
-
+![image](https://img.shields.io/badge/-HuggingFace-FDEE21?style=for-the-badge&logo=HuggingFace&logoColor=black)
 A Python package for ML utility functions
 
 
