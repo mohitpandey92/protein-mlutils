@@ -13,9 +13,17 @@
   <img src="https://img.shields.io/badge/Lightning-792DE4?style=for-the-badge&logo=lightning&logoColor=white" alt="Lightning">
   <img src="https://img.shields.io/badge/-HuggingFace-FDEE21?style=for-the-badge&logo=HuggingFace&logoColor=black" alt="HuggingFace">
 </p>
-A Python package for ML utility functions
+A Python package for ML utility functions specifically designed for protein-related machine learning tasks. This package provides a set of tools to facilitate data loading, model training, evaluation, and prediction tasks in the field of protein machine learning.
 
 
+## Features
+- Protein Sequence preprocessing:
+  - One-hot encoding
+  - Embedding generation for a fixed dimension
+- Model training and evaluation:
+  - TODO: Support for various model types (e.g., Random Forest, XGBoost, PyTorch)
+  - TODO: Cross-validation and hyperparameter tuning
+  - TODO: Implement functionality to save trained models and their performance metrics
 
 ## Local installation
 To install the package locally, you can use the `build` tool to create a source distribution and a wheel distribution. First, ensure you have the `build` package installed:
@@ -53,12 +61,6 @@ model = pml.train_model(data, model_type="random_forest")
 predictions = pml.make_predictions(model, data)
 pml.evaluate_model(model, data)
 ``` 
-
-## Features
-- Data loading and preprocessing
-- Model training and evaluation
-- Prediction utilities
-- Utility functions for common ML tasks 
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request.
