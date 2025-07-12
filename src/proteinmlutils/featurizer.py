@@ -96,10 +96,7 @@ def protein_embedding_generator(sequence, max_length=None, embedding_dim=5, flat
         embedding_generator=nn.Embedding(len(amino_acids),embedding_dim=embedding_dim)
         #it's important to generate the
         output=embedding_generator(torch.LongTensor(sequence_index_big_list))
-        if flatten: #return the output as a flattened 1D array
-            return output.detach().numpy().flatten()
-        else:  #return the output as is
-            return output.detach().numpy()
+        
     else:
         raise ValueError("Sequence must be a string, list, or numpy array")
 
