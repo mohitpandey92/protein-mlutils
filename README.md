@@ -1,7 +1,21 @@
 # protein-mlutils
+#add badge
+![GitHub](https://img.shields.io/github/license/mohitpandey92/protein-mlutils)
+![GitHub Repo stars](https://img.shields.io/github/stars/mohitpandey92/protein-mlutils?style=social)
+![GitHub last commit](https://img.shields.io/github/last-commit/mohitpandey92/protein-mlutils)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/mohitpandey92/protein-mlutils)
+![GitHub top language](https://img.shields.io/github/languages/top/mohitpandey92/protein-mlutils)
+![GitHub contributors](https://img.shields.io/github/contributors/mohitpandey92/protein-mlutils)
+![GitHub issues](https://img.shields.io/github/issues/mohitpandey92/protein-mlutils)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/mohitpandey92/protein-mlutils)
+![GitHub forks](https://img.shields.io/github/forks/mohitpandey92/protein-mlutils?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/mohitpandey92/protein-mlutils?style=social)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/mohitpandey92/protein-mlutils)
+![GitHub contributors](https://img.shields.io/github/contributors/mohitpandey92/protein-mlutils)
 ![Python package](https://img.shields.io/badge/python-3.12%20-blue.svg)
-![PyPI](https://img.shields.io/pypi/v/protein_mlutils)
+![Build Status](https://img.shields.io/github/workflow/status/mohitpandey92/protein-mlutils/CI)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
+
 
 A Python package for ML utility functions
 
