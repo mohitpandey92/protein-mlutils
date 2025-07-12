@@ -18,9 +18,10 @@ A Python package for ML utility functions
 
 
 ## Local installation
-If you would like to convert your Python code into a Python package that can be used widely, then follow the instructions below.
-After going to the folder that contains `pyproject.toml`, use the following commands:
+To install the package locally, you can use the `build` tool to create a source distribution and a wheel distribution. First, ensure you have the `build` package installed:
+```pip install build```
 
+Then, navigate to the root directory of your project (where `pyproject.toml` is located) and run the following commands:
 ```
 python -m build
 python -m pip install dist/*.gz
