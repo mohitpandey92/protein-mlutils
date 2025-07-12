@@ -1,15 +1,14 @@
 # protein-mlutils
 
-#can you put the badges in the center of readme?
-
 <p align="center">
   <img src="https://img.shields.io/github/last-commit/mohitpandey92/protein-mlutils" alt="GitHub last commit">
   <img src="https://img.shields.io/github/languages/code-size/mohitpandey92/protein-mlutils" alt="GitHub code size in bytes">
   <img src="https://img.shields.io/github/languages/top/mohitpandey92/protein-mlutils" alt="GitHub top language">
   <img src="https://img.shields.io/badge/python-3.12%20-blue.svg" alt="Python package">
+  <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License">
 </p>
 <p align="center">
-  <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License">
+  
   <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch">
   <img src="https://img.shields.io/badge/Lightning-792DE4?style=for-the-badge&logo=lightning&logoColor=white" alt="Lightning">
   <img src="https://img.shields.io/badge/-HuggingFace-FDEE21?style=for-the-badge&logo=HuggingFace&logoColor=black" alt="HuggingFace">
