@@ -42,7 +42,7 @@ def data_cross_validation_stratification( X_data, Y_data, strategy='random', kfo
         raise ValueError("Unexpected stratification method")
 
 
-def data_train_vs_test_splitting(X_data, Y_data, data_shuffle=True, test_size_var=0.2):
+def data_train_vs_test_splitting(X_data, Y_data, data_shuffle=True, test_size=0.2):
         '''
         It takes the input data and splits it into training and testing sets. Before splitting it, it can randomize the data if shuffle is set to True. 
         ToDo: It should output a DataFrame 
@@ -62,7 +62,7 @@ def data_train_vs_test_splitting(X_data, Y_data, data_shuffle=True, test_size_va
             X_data, Y_data = sk.utils.shuffle(X_data, Y_data, random_state=0)
 
         
-        X_train, X_test, y_train, y_test = sk.model_selection.train_test_split(X_data, Y_data, test_size=test_size_var, random_state=42)
+        X_train, X_test, y_train, y_test = sk.model_selection.train_test_split(X_data, Y_data, test_size=test_size, random_state=42)
         print("Training+validation sample size:", len(y_train))
         print("Test sample size:", len(y_test))
 

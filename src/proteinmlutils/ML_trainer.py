@@ -65,7 +65,7 @@ class classifier_model_trainer:
             self.scoring = ["f1", "precision", "recall", "accuracy"]
             self.n_iter = 2
             self.primary_scoring = 'f1' 
-            self.cv_splitter = data_transformation.data_cross_validation_stratification(self.X_train, self.y_train, strategy=strategy, kfold=self.kfold)
+            self.cv_splitter = data_stratifier.data_cross_validation_stratification(self.X_train, self.y_train, strategy=strategy, kfold=self.kfold)
 
         elif kwargs.get("scoring") is not None:
             self.scoring = kwargs["scoring"]
