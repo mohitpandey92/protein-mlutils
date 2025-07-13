@@ -111,7 +111,8 @@ class classifier_model_trainer:
         best_model_found=random_search.best_estimator_
         y_pred_train=best_model_found.predict(self.X_train)
         
-        #bunch of print statements to see the performance of the model on training and test model
+        print("Best parameters found: ", random_search.best_params_)
+        print("Best score found: ", random_search.best_score_)
         print("Score on training: Recall=", sk.metrics.recall_score(self.y_train,y_pred_train), "Precision=", sk.metrics.precision_score(self.y_train,y_pred_train), "F1 score=",sk.metrics.f1_score(self.y_train, y_pred_train))
 
         return best_model_found, random_search_results_df
