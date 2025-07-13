@@ -60,24 +60,35 @@ class classifier_model_trainer:
         self.y_train = y_train
         self.kfold = kfold
         self.strategy = strategy
-            
-        if kwargs is None:
-            self.scoring = ["f1", "precision", "recall", "accuracy"]
-            self.n_iter = 2
-            self.primary_scoring = 'f1' 
-            self.cv_splitter = data_stratifier.data_cross_validation_stratification(self.X_train, self.y_train, strategy=strategy, kfold=self.kfold)
 
-        elif kwargs.get("scoring") is not None:
+
+        if kwargs.get("scoring") is not None:
             self.scoring = kwargs["scoring"]
-        elif kwargs.get("scoring") is not None:
+        else:
+            self.scoring = ["f1", "precision", "recall", "accuracy"]
+            
+        if kwargs.get("n_iter") is not None:
+            self.n_iter = kwargs["n_iter"]
+        else:
+            self.n_iter = 2
+        if kwargs.get("scoring") is not None:
             self.scoring = kwargs["scoring"]
-        elif kwargs.get("primary_scoring") is not None:
+        else:
+            self.scoring = ["f1", "precision", "recall", "accuracy"]
+        if kwargs.get("primary_scoring") is not None:
             self.primary_scoring = kwargs["primary_scoring"]
-        elif kwargs.get('cv_splitter') is not None:
+        else:
+            self.primary_scoring = 'f1'
+        if kwargs.get('cv_splitter') is not None:
             self.cv_splitter = kwargs['cv_splitter']
         else:
-            raise ValueError("Unexpected kwargs")
-
+            if self.strategy == 'random':
+                self.cv_splitter = sk.model_selection.KFold(n_splits=self.kfold, shuffle=True, random_state=42)
+            elif self.strategy == 'groupkfold':
+                self.cv_splitter = sk.model_selection.GroupKFold(n_splits=self.kfold)
+            else:
+                raise ValueError("Strategy must be either 'random' or 'groupkfold'")
+        
 
     def RandomForestClassifier_trainer(self, **kwargs):
         '''
