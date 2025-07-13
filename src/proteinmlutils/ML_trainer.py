@@ -99,7 +99,7 @@ class classifier_model_trainer:
         if kwargs.get('param_dict') is not None:
             self.param_dict = kwargs['param_dict']
         else:
-            self.param_dict  = {'n_estimators': [200,500,1000],
+            self.param_dict  = {'n_estimators': [10,20,30],
         'min_samples_leaf': [50,100],
         'max_depth': [10,20],
         'max_features': ["sqrt"],
