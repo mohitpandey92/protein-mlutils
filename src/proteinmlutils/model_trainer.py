@@ -84,7 +84,12 @@ class classifier_model_trainer:
             classifier_model.fit(self.X_train, self.y_train)
             y_pred_train = classifier_model.predict(self.X_train)
             
+            print("Best parameters found: ", random_search.best_params_)
+            print("Score on training: Recall=", sk.metrics.recall_score(self.y_train,y_pred_train), "Precision=", sk.metrics.precision_score(self.y_train,y_pred_train), "F1 score=",sk.metrics.f1_score(self.y_train, y_pred_train))
+            
+        
             return classifier_model, pd.DataFrame({'y_true': self.y_train, 'y_pred': y_pred_train})
+        
         
         elif training_mode == 'CrossVal':
             
