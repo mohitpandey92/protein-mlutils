@@ -64,10 +64,10 @@ def data_train_vs_test_splitting(X_data, Y_data, sequence_data, data_shuffle=Tru
 
 
         df=pd.DataFrame({
-            "X": np.concatenate((X_train, X_test)),
+            "X": np.concatenate((X_train, X_test)).tolist(),
             "y": list(y_train) + list(y_test),
-            "linear_sequence": list(sequence_train) + list(sequence_test),
-            "Train_vs_Test":["Test"]* len(y_test) + ["Train"]*len(y_train)
+            "sequence": list(sequence_train) + list(sequence_test),
+            "Train_vs_Test": ["Train"]*len(y_train) + ["Test"]*len(y_test)
         })
         
         print("Training+validation sample size:", len(y_train))
