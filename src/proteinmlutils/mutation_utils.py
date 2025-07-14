@@ -1,17 +1,16 @@
 import numpy as np
-import re
-from Bio.Align import PairwiseAligner
+
 
 
 def mutation_over_base_seq(base_seq,new_seq, starting_pos=1):
     
     '''
-    Note that position starts with Q=1
     Input:
     base_seq: str, sequence of amino acids
     new_seq: str, sequence of amino acids
     starting_pos: int, should we use starting_pos=0 vs starting_pos=1 naming convention
-
+    Output:
+    mutation_list: list, list of mutations that need to be applied
     '''
     assert len(base_seq)==len(new_seq), "expected same length sequence"
 
