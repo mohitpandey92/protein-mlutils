@@ -69,14 +69,16 @@ class classifier_model_trainer:
         Returns a Random Forest Classifier model with default parameters.
         '''
         
-        if kwargs.get('param_dict') is not None:
-            param_dict = kwargs['param_dict']
+        if kwargs.get('param_grid') is not None:
+            param_grid = kwargs['param_grid']
         else:
-            param_dict = {'n_estimators': [10,20,30],
-        'min_samples_leaf': [50,100],
-        'max_depth': [10,20],
-        'max_features': ["sqrt"],
-        'random_state':[0]}
+            param_grid = {
+            'n_estimators': [50,100, 200],
+            'max_depth': [None, 5, 10, 20],
+            'min_samples_split': [2, 5,10],
+            'min_samples_leaf': [1, 2,3,4],
+            'bootstrap': [True, False]
+        }
         classifier_model = RandomForestClassifier()
         if training_mode == 'default':
             classifier_model.fit(self.X_train, self.y_train)
@@ -91,7 +93,7 @@ class classifier_model_trainer:
             else:
                 n_jobs = -1
 
-            random_search = sk.model_selection.RandomizedSearchCV(classifier_model,param_dict, cv=self.cv_splitter, n_iter=self.n_iter, scoring=self.scoring, refit=self.primary_scoring, n_jobs=n_jobs, verbose=2, return_train_score=False)
+            random_search = sk.model_selection.RandomizedSearchCV(classifier_model,param_grid, cv=self.cv_splitter, n_iter=self.n_iter, scoring=self.scoring, refit=self.primary_scoring, n_jobs=n_jobs, verbose=2, return_train_score=False)
             random_search.fit(self.X_train,self.y_train)
             random_search_results_df=pd.DataFrame(random_search.cv_results_)
             best_model_found=random_search.best_estimator_
