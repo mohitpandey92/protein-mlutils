@@ -171,7 +171,7 @@ def save_confusion_matrix(y_true, y_pred, filename, labels, ymap=None, figsize=(
 
   
 
-def save_plots_for_classifier_fn(folder_name, y_test, y_pred, y_continuous, probs, y_label="avg_log2enrich_23.11_and_23.13",ymap=["low_enrichment", "high_enrichment"]):
+def save_plots_for_classifier_fn(folder_name, y_test, y_pred, y_continuous, probs, y_label="avg_score",ymap=["low_enrichment", "high_enrichment"]):
     N_categories=len(np.unique(y_test))
     today = datetime.date.today()
     date = today.strftime("%Y_%m_%d")
