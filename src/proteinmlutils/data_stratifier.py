@@ -1,12 +1,10 @@
 import sklearn as sk
+import numpy as np
+import pandas as pd
 from sklearn.model_selection import KFold
 from sklearn.model_selection import GroupKFold
 from sklearn.preprocessing import LabelEncoder
 
-import sklearn as sk
-from sklearn.model_selection import KFold
-from sklearn.model_selection import GroupKFold
-from sklearn.preprocessing import LabelEncoder
 
 def data_cross_validation_stratification( X_data, Y_data, strategy='random', kfold=5, group_string_arr=None):
 
@@ -42,7 +40,7 @@ def data_cross_validation_stratification( X_data, Y_data, strategy='random', kfo
         raise ValueError("Unexpected stratification method")
 
 
-def data_train_vs_test_splitting(X_data, Y_data, data_shuffle=True, test_size=0.2):
+def data_train_vs_test_splitting(X_data, Y_data, linear_sequence_data, data_shuffle=True, test_size=0.2):
         '''
         It takes the input data and splits it into training and testing sets. Before splitting it, it can randomize the data if shuffle is set to True. 
         ToDo: It should output a DataFrame 
@@ -55,16 +53,25 @@ def data_train_vs_test_splitting(X_data, Y_data, data_shuffle=True, test_size=0.
 
         Output:
         ----------------
-        X_test, y_test, X_train, y_train
+       df: a pandas DataFrame containing the training and testing data
         '''
         
         if data_shuffle:
             X_data, Y_data = sk.utils.shuffle(X_data, Y_data, random_state=0)
 
+
+        X_train, X_test, y_train, y_test, linear_sequence_train, linear_sequence_test = sk.model_selection.train_test_split(X_data, Y_data, linear_sequence_data, test_size=test_size, random_state=42)
         
-        X_train, X_test, y_train, y_test = sk.model_selection.train_test_split(X_data, Y_data, test_size=test_size, random_state=42)
+      
+        df=pd.DataFrame({
+            "X": np.concatenate((X_train, X_test)),
+            "y": list(y_train) + list(y_test),
+            "linear_sequence": list(linear_sequence_train) + list(linear_sequence_test),
+            "Train_vs_Test":["Test"]* len(y_test) + ["Train"]*len(y_train)
+        })
+        
         print("Training+validation sample size:", len(y_train))
         print("Test sample size:", len(y_test))
 
-        return X_train, X_test, y_train, y_test
+        return df
 
