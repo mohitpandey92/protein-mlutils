@@ -1,34 +1,14 @@
-import os
-import time
-import numpy as np
-import scipy as sp
 import pandas as pd
-import seaborn as sns
-import xgboost as xgb
-import matplotlib.pyplot as plt
-#from tqdm.notebook import tqdm
-
-import multiprocessing
-from joblib import dump,load
-from joblib import Parallel, delayed 
-
-from scipy.optimize import curve_fit
-from scipy import stats
+import numpy as np
 
 import sklearn as sk
-from sklearn.metrics import roc_curve, auc
-from sklearn.preprocessing import label_binarize
-from sklearn.model_selection import KFold
-from sklearn.model_selection import GroupKFold
-from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
-#from sklearn.ensemble import RandomForestRegressor
-#from sklearn.ensemble import RandomForestClassifier
-#from sklearn.model_selection import GridSearchCV
-#from flashtext import KeywordProcessor
-import datetime
+
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import RandomizedSearchCV
+
+from sklearn.model_selection import KFold, GroupKFold
+
+
 
 sns.set_theme(context='talk', style='white', palette='deep', font='sans-serif', font_scale=1)
 
@@ -90,30 +70,44 @@ class classifier_model_trainer:
                 raise ValueError("Strategy must be either 'random' or 'groupkfold'")
         
 
-    def RandomForestClassifier_trainer(self, **kwargs):
+    def RandomForestClassifier_trainer(self, training_mode='default', **kwargs):
         '''
         Returns a Random Forest Classifier model with default parameters.
         '''
-        classifier_model = RandomForestClassifier()
-
+        
         if kwargs.get('param_dict') is not None:
-            self.param_dict = kwargs['param_dict']
+            param_dict = kwargs['param_dict']
         else:
-            self.param_dict  = {'n_estimators': [10,20,30],
+            param_dict = {'n_estimators': [10,20,30],
         'min_samples_leaf': [50,100],
         'max_depth': [10,20],
         'max_features': ["sqrt"],
-        'n_jobs':[-1], 'random_state':[0]}
-
-        random_search = sk.model_selection.RandomizedSearchCV(classifier_model, self.param_dict, cv=self.cv_splitter, n_iter=self.n_iter, scoring=self.scoring, refit=self.primary_scoring, n_jobs=1, verbose=2, return_train_score=False)
-        random_search.fit(self.X_train,self.y_train)
-        random_search_results_df=pd.DataFrame(random_search.cv_results_)
-        best_model_found=random_search.best_estimator_
-        y_pred_train=best_model_found.predict(self.X_train)
+        'random_state':[0]}
+        classifier_model = RandomForestClassifier()
+        if training_mode == 'default':
+            classifier_model.fit(self.X_train, self.y_train)
+            y_pred_train = classifier_model.predict(self.X_train)
+            
+            return classifier_model, pd.DataFrame({'y_true': self.y_train, 'y_pred': y_pred_train})
         
-        print("Best parameters found: ", random_search.best_params_)
-        print("Best score found: ", random_search.best_score_)
-        print("Score on training: Recall=", sk.metrics.recall_score(self.y_train,y_pred_train), "Precision=", sk.metrics.precision_score(self.y_train,y_pred_train), "F1 score=",sk.metrics.f1_score(self.y_train, y_pred_train))
+        elif training_mode == 'CrossVal':
+            
+            if kwargs.get('n_jobs') is not None:
+                n_jobs = kwargs['n_jobs']
+            else:
+                n_jobs = -1
 
-        return best_model_found, random_search_results_df
+            random_search = sk.model_selection.RandomizedSearchCV(classifier_model,param_dict, cv=self.cv_splitter, n_iter=self.n_iter, scoring=self.scoring, refit=self.primary_scoring, n_jobs=n_jobs, verbose=2, return_train_score=False)
+            random_search.fit(self.X_train,self.y_train)
+            random_search_results_df=pd.DataFrame(random_search.cv_results_)
+            best_model_found=random_search.best_estimator_
+            y_pred_train=best_model_found.predict(self.X_train)
+            print("Best parameters found: ", random_search.best_params_)
+            print("Score on training: Recall=", sk.metrics.recall_score(self.y_train,y_pred_train), "Precision=", sk.metrics.precision_score(self.y_train,y_pred_train), "F1 score=",sk.metrics.f1_score(self.y_train, y_pred_train))
+            return best_model_found, random_search_results_df
+
+
+        else:
+            raise ValueError("Training mode must be either 'default' or 'CrossVal'")
+        
 
