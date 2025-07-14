@@ -112,7 +112,7 @@ def save_ROC_curve(y_test, y_pred, y_probability, N_categories,folder_name):
 
 
 
-def save_confusion_matrix(y_true, y_pred, filename, labels, ymap=None, figsize=(10,8)):
+def save_confusion_matrix(y_true, y_pred, foldername, labels, ymap=None, figsize=(10,8)):
     """
     Generate matrix plot of confusion matrix with pretty annotations.
     The plot image is saved to disk.
@@ -165,7 +165,7 @@ def save_confusion_matrix(y_true, y_pred, filename, labels, ymap=None, figsize=(
     ax=sns.heatmap(cm, annot=annot, fmt='', ax=ax, xticklabels=labels, cbar=True, cbar_kws={'format':PercentFormatter()}, yticklabels=labels, cmap="Blues")
     ax.yaxis.set_ticklabels(labels)
     ax.xaxis.set_ticklabels(labels)
-    plt.savefig(filename,  bbox_inches='tight')
+    plt.savefig(foldername+'classifier_confusion_matrix.png',  bbox_inches='tight')
 
 
 
