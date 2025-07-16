@@ -119,7 +119,7 @@ class classifier_model_trainer:
             raise ValueError("Training mode must be either 'default' or 'CrossVal'")
         
 
-    def XGBoost_classifier_trainer(self, N_categories, training_mode='default', **kwargs):
+    def XGBoostClassifier_trainer(self, N_categories, training_mode='default', **kwargs):
         #TODO: Add docstrings. Add purpose of the function. Add documentation for the variables and datatypes. Add comment on the fact the XGBoost is preferred.
 
         '''
