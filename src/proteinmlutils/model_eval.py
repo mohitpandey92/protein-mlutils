@@ -8,7 +8,7 @@ import os
 import numpy as np
 import pandas as pd
 import datetime    
-
+from joblib import dump
 
 sns.set_theme(context='talk', style='white', palette='deep', font='sans-serif', font_scale=1)
 
@@ -171,12 +171,14 @@ def save_confusion_matrix(y_true, y_pred, foldername, labels, ymap=None, figsize
 
   
 
-def save_plots_for_classifier_fn(folder_name, y_test, y_pred, y_continuous, probs, y_label="avg_score",ymap=["low_enrichment", "high_enrichment"]):
+def save_plots_for_classifier_fn(folder_name, model, y_test, y_pred, y_continuous, probs, y_label="avg_score",ymap=["low_enrichment", "high_enrichment"]):
     N_categories=len(np.unique(y_test))
     today = datetime.date.today()
     date = today.strftime("%Y_%m_%d")
     folder_name=folder_name[0:-1]+"_"+str(date)+"/"
     os.makedirs(folder_name, exist_ok=True)
+    dump_file = folder_name + 'sklearn_model.pkl'
+    dump(model, dump_file)
     save_classification_report(y_test, y_pred, folder_name=folder_name)
     save_classifier_box_plot(y_pred, y_continuous, folder_name=folder_name, y_label=y_label)
     save_ROC_curve(y_test, y_pred, probs,  N_categories, folder_name=folder_name)
