@@ -111,7 +111,7 @@ class classifier_model_trainer:
             else:
                 n_jobs = -1
 
-            best_model_found, random_search_results_df=self.kfold_trainer_using_random_grid_search(classifier_model, param_grid, n_jobs=1)
+            best_model_found, random_search_results_df=self.kfold_trainer_using_random_grid_search(classifier_model, param_grid, n_jobs=n_jobs)
             return best_model_found, random_search_results_df
 
 
@@ -164,7 +164,8 @@ class classifier_model_trainer:
                     'colsample_bytree': stats.uniform(0.5, 0.4),
                     'n_estimators': [30,50,70,100], 'n_jobs':[-1]} 
 
-
+            else:
+                raise ValueError("N_categories must be either 2 or greater than 2 for binary and multi-class classification respectively.")        
         if training_mode == 'default':
             classifier_model.fit(self.X_train, self.y_train)
             y_pred_train = classifier_model.predict(self.X_train)
@@ -182,7 +183,7 @@ class classifier_model_trainer:
                 n_jobs = 1
 
 
-            best_model_found, random_search_results_df=self.kfold_trainer_using_random_grid_search(classifier_model, param_grid, n_jobs=1)
+            best_model_found, random_search_results_df=self.kfold_trainer_using_random_grid_search(classifier_model, param_grid, n_jobs=n_jobs)
             return best_model_found, random_search_results_df
         else:
             raise ValueError("Training mode must be either 'default' or 'CrossVal'")
