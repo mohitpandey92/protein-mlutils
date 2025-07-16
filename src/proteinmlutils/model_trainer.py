@@ -152,7 +152,7 @@ class classifier_model_trainer:
                         'gamma': stats.uniform(0.0,0.6),
                         'subsample':  stats.uniform(0.3,0.6),
                         'colsample_bytree': stats.uniform(0.5, 0.4),
-                        'n_estimators': [50, 100, 250, 500], 'n_jobs':[-1]}
+                        'n_estimators': [25,50, 75, 100, 200], 'n_jobs':[-1]}
     
             elif N_categories==2:
                     param_grid = {'objective':['binary:logistic'], 
@@ -162,9 +162,9 @@ class classifier_model_trainer:
                     'gamma': stats.uniform(0.0,0.6),
                     'subsample':  stats.uniform(0.3,0.6),
                     'colsample_bytree': stats.uniform(0.5, 0.4),
-                    'n_estimators': [30,50,100,500,1000], 'n_jobs':[-1]} 
-    
-            
+                    'n_estimators': [30,50,70,100], 'n_jobs':[-1]} 
+
+
         if training_mode == 'default':
             classifier_model.fit(self.X_train, self.y_train)
             y_pred_train = classifier_model.predict(self.X_train)
