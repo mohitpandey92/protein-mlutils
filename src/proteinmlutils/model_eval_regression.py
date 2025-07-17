@@ -10,8 +10,7 @@ import seaborn as sns
 import sklearn as sk
 from joblib import dump
 def save_regression_results(folder_name, model, y_pred, y_test, train_set=False):
-
-   '''
+    '''
     Its purpose is to plot the regression results showing prediction and actual data.
     Input:
     folder_name: the folder where the model will be saved. Important to put a '_' at the end of the folder name as the script removes the last character and appends date to it.
