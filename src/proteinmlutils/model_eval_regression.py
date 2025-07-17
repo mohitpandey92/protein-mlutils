@@ -32,8 +32,8 @@ def save_plot_results(folder_name, model, y_pred, y_test, train_set=False):
     plt.setp(ax.collections[1], alpha=0.5)
     plt.plot(y_test, func(y_test, *popt), 'b', alpha=0.35, label=r'fit: %.2fx+ %.2f, $R_{fit}^2$=%.2f' % (tuple(popt)[0],tuple(popt)[1], sk.metrics.r2_score(y_test,func(y_test, *popt) ) ))
     plt.legend(loc='lower right', fontsize=11)
-    plt.ylabel('Predicted values')
-    plt.xlabel('Actual values')
+    plt.ylabel('Predicted values', fontsize=14)
+    plt.xlabel('Actual values', fontsize=14)
     plt.title('MAE=%.2f, MAPE=%.2f, \n Spearman Corr=%.2f' % (sk.metrics.mean_absolute_error(y_test,y_pred), sk.metrics.mean_absolute_percentage_error(y_test, y_pred), spearmanr_corr), fontsize=14)
     plt.tight_layout()
     if train_set:
