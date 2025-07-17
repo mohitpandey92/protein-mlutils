@@ -32,9 +32,9 @@ def save_plot_results(folder_name, model, y_pred, y_test, train_set=False):
     ax=sns.regplot(x=y_test, y=y_pred, color='b', scatter_kws={'alpha': 0.5, 's': 10}, line_kws={'alpha': 0.5, 'lw':1, 'ls':'-.'}, ci=90)
     plt.setp(ax.collections[1], alpha=0.5)
     plt.plot(y_test, func(y_test, *popt), 'b', alpha=0.35, label=r'fit: %.2fx+ %.2f, $R_{fit}^2$=%.2f' % (tuple(popt)[0],tuple(popt)[1], sk.metrics.r2_score(y_test,func(y_test, *popt) ) ))
-    plt.legend(loc='lower right')
+    plt.legend(loc='lower right', fontsize=11)
     plt.ylabel('Predicted values')
-    plt.xlabel('Actual values',)
+    plt.xlabel('Actual values')
     plt.title('MAE=%.2f, MAPE=%.2f, \n Spearman Corr=%.2f' % (sk.metrics.mean_absolute_error(y_test,y_pred), sk.metrics.mean_absolute_percentage_error(y_test, y_pred), spearmanr_corr))
     plt.tight_layout()
     if train_set:
