@@ -85,6 +85,6 @@ def save_regression_results(folder_name, model, y_pred, y_test, train_set=False)
     dump_file = folder_name + 'sklearn_model.joblib'
     dump(model, dump_file)    
     
-    save_regression_results(folder_name, model, y_pred, y_test, train_set=train_set)
+    save_plot_results(folder_name, model, y_pred, y_test, train_set=train_set)
     compute_regression_metrics(folder_name, y_test, y_pred, train_set=train_set)
     return None
