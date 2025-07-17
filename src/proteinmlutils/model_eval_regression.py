@@ -28,6 +28,7 @@ def save_plot_results(folder_name, model, y_pred, y_test, train_set=False):
     
     
     spearmanr_corr, _ = spearmanr(y_test, y_pred)
+    sns.set(font_scale=1.5)
     ax=sns.regplot(x=y_test, y=y_pred, color='b', scatter_kws={'alpha': 0.5, 's': 10}, line_kws={'alpha': 0.5, 'lw':1, 'ls':'-.'}, ci=90)
     plt.setp(ax.collections[1], alpha=0.5)
     plt.plot(y_test, func(y_test, *popt), 'b', alpha=0.35, label=r'fit: %.2fx+ %.2f, $R_{fit}^2$=%.2f' % (tuple(popt)[0],tuple(popt)[1], sk.metrics.r2_score(y_test,func(y_test, *popt) ) ))
