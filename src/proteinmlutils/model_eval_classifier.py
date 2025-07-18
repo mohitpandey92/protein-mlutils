@@ -171,7 +171,7 @@ def save_confusion_matrix(y_true, y_pred, foldername, labels, ymap=None, figsize
 
   
 
-def save_plots_for_classifier_fn(folder_name, model, y_test, y_pred, y_continuous, probs, y_label="avg_score",ymap=["low_enrichment", "high_enrichment"]):
+def save_plots_for_classifier_fn(folder_name, model, y_test, y_pred, y_continuous, probs, y_label="avg_score",ymap=["low_enrichment", "high_enrichment"], feature_columns=None):
     N_categories=len(np.unique(y_test))
     today = datetime.date.today()
     date = today.strftime("%Y_%m_%d")
@@ -185,3 +185,13 @@ def save_plots_for_classifier_fn(folder_name, model, y_test, y_pred, y_continuou
     labels=[0,1]
     save_confusion_matrix(y_test, y_pred, foldername=folder_name, labels=labels, ymap=ymap, figsize=(10,7))
     print("Saved classification report, box plot and ROC curve successfully")
+
+    if (hasattr(model, 'feature_importances_')) and feature_columns is not None:
+        features_df=pd.DataFrame({ "importance": model.feature_importances_, "feature":feature_columns})
+        features_df=features_df.sort_values(by="importance", ascending=False).reset_index(drop=True)
+        features_df.to_csv(folder_name + "feature_importances.csv", index=False)
+    else:
+        print("Model does not have feature importances or feature columns are not provided.")
+    print("Results saved in folder: ", folder_name)
+
+    return None

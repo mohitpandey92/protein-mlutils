@@ -68,7 +68,7 @@ def compute_regression_metrics(folder_name, y_test, y_pred, train_set=False):
     
     return None
 
-def save_regression_results(folder_name, model, y_pred, y_test, train_set=False):
+def save_regression_results(folder_name, model, y_pred, y_test, train_set=False, feature_columns=None):
     '''
     Its purpose is to plot the regression results showing prediction and actual data.
     Input:
@@ -88,4 +88,11 @@ def save_regression_results(folder_name, model, y_pred, y_test, train_set=False)
     
     save_plot_results(folder_name, model, y_pred, y_test, train_set=train_set)
     compute_regression_metrics(folder_name, y_test, y_pred, train_set=train_set)
+    if (hasattr(model, 'feature_importances_')) and feature_columns is not None:
+        features_df=pd.DataFrame({ "importance": model.feature_importances_, "feature":feature_columns})
+        features_df=features_df.sort_values(by="importance", ascending=False).reset_index(drop=True)
+        features_df.to_csv(folder_name + "feature_importances.csv", index=False)
+    else:
+        print("Model does not have feature importances or feature columns are not provided.")
+    print("Results saved in folder: ", folder_name)
     return None
