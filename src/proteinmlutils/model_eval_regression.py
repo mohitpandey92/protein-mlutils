@@ -79,13 +79,14 @@ def feature_importance_plot(model, feature_columns, folder_name):
     features_df=pd.DataFrame({ "importance": model.feature_importances_, "feature":feature_columns})
     features_df=features_df.sort_values(by="importance", ascending=False).reset_index(drop=True)
     features_df.to_csv(folder_name + "feature_importances.csv", index=False)
-    sns.set_theme(context='talk', style='white', palette='deep', font='sans-serif', font_scale=1)
+    
+    #sns.set_theme(context='talk', style='white', palette='deep', font='sans-serif', font_scale=1)
     sns.barplot(data=features_df.head(20), x="importance", y="feature")
     plt.title("Top 20 features by importance")
     plt.xlabel("Importance")
     plt.ylabel("Feature")
     plt.savefig(folder_name + "feature_importance.png")
-    plt.close()
+    
 
 def save_regression_results(folder_name, model, y_pred, y_test, train_set=False, feature_columns=None):
     '''
