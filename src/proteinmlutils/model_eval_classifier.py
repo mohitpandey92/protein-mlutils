@@ -169,8 +169,6 @@ def save_confusion_matrix(y_true, y_pred, foldername, labels, ymap=None, figsize
 
 
 
-  
-
 def save_plots_for_classifier_fn(folder_name, model, y_test, y_pred, y_continuous, probs, y_label="avg_score",ymap=["low_enrichment", "high_enrichment"], feature_columns=None):
     N_categories=len(np.unique(y_test))
     today = datetime.date.today()

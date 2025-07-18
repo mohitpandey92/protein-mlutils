@@ -68,6 +68,26 @@ def compute_regression_metrics(folder_name, y_test, y_pred, train_set=False):
     
     return None
 
+def feature_importance_plot(model, feature_columns, folder_name):
+    '''
+    Its purpose is to plot the feature importance of the model.
+    Input:
+    model: the trained model.
+    feature_columns: a list of feature names.
+    folder_name: the folder where the model will be saved.
+    '''
+    features_df=pd.DataFrame({ "importance": model.feature_importances_, "feature":feature_columns})
+    features_df=features_df.sort_values(by="importance", ascending=False).reset_index(drop=True)
+    features_df.to_csv(folder_name + "feature_importances.csv", index=False)
+    sns.set_theme(context='talk', style='white', palette='deep', font='sans-serif', font_scale=1)
+    sns.barplot(data=features_df.head(20), x="importance", y="feature")
+    plt.title("Top 20 features by importance")
+    plt.xlabel("Importance")
+    plt.ylabel("Feature")
+    plt.tight_layout()
+    plt.savefig(folder_name + "feature_importance.png")
+    plt.close()
+
 def save_regression_results(folder_name, model, y_pred, y_test, train_set=False, feature_columns=None):
     '''
     Its purpose is to plot the regression results showing prediction and actual data.
@@ -89,9 +109,7 @@ def save_regression_results(folder_name, model, y_pred, y_test, train_set=False,
     save_plot_results(folder_name, model, y_pred, y_test, train_set=train_set)
     compute_regression_metrics(folder_name, y_test, y_pred, train_set=train_set)
     if (hasattr(model, 'feature_importances_')) and feature_columns is not None:
-        features_df=pd.DataFrame({ "importance": model.feature_importances_, "feature":feature_columns})
-        features_df=features_df.sort_values(by="importance", ascending=False).reset_index(drop=True)
-        features_df.to_csv(folder_name + "feature_importances.csv", index=False)
+        feature_importance_plot(model, feature_columns, folder_name)
     else:
         print("Model does not have feature importances or feature columns are not provided.")
     print("Results saved in folder: ", folder_name)
