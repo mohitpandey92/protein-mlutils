@@ -84,7 +84,6 @@ def feature_importance_plot(model, feature_columns, folder_name):
     plt.title("Top 20 features by importance")
     plt.xlabel("Importance")
     plt.ylabel("Feature")
-    plt.tight_layout()
     plt.savefig(folder_name + "feature_importance.png")
     plt.close()
 
