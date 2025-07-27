@@ -28,7 +28,7 @@ A Python package for ML utility functions specifically designed for protein-rela
 ## Package Structure
 
 
-<img src="https://github.com/mohitpandey92/protein-mlutils/blob/main/package_architecture.jpeg" alt="Package Structure" width="600">
+<img src="https://github.com/mohitpandey92/protein-mlutils/blob/main/package_architecture.jpeg" alt="Package Structure" width="800">
 
 ## Local installation
 To install the package locally, you can use the `build` tool to create a source distribution and a wheel distribution. First, ensure you have the `build` package installed:
