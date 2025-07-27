@@ -25,6 +25,11 @@ A Python package for ML utility functions specifically designed for protein-rela
   - TODO: Cross-validation and hyperparameter tuning
   - TODO: Implement functionality to save trained models and their performance metrics
 
+## Package Structure
+
+#load the image
+<img src="https://github.com/mohitpandey92/protein-mlutils/blob/main/package_architecture.jpeg" alt="Package Structure" width="600">
+
 ## Local installation
 To install the package locally, you can use the `build` tool to create a source distribution and a wheel distribution. First, ensure you have the `build` package installed:
 ```pip install build```
