@@ -27,7 +27,7 @@ A Python package for ML utility functions specifically designed for protein-rela
 
 ## Package Structure
 
-#load the image
+
 <img src="https://github.com/mohitpandey92/protein-mlutils/blob/main/package_architecture.jpeg" alt="Package Structure" width="600">
 
 ## Local installation
