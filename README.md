@@ -17,13 +17,31 @@ A Python package for ML utility functions specifically designed for protein-rela
 
 
 ## Features
-- Protein Sequence preprocessing:
-  - One-hot encoding
-  - Embedding generation for a fixed dimension
-- Model training and evaluation:
-  - TODO: Support for various model types (e.g., Random Forest, XGBoost, PyTorch)
-  - TODO: Cross-validation and hyperparameter tuning
-  - TODO: Implement functionality to save trained models and their performance metrics
+- Data preprocessing:
+  - Protein Sequence preprocessing:
+    - One-hot encoding
+    - Embedding generation for a fixed dimension
+  - TODO:Protein Structure preprocessing using Rosetta:
+    - 3D structure feature extraction: SASA, secondary structure, 3D coordinates
+    - Physics-based energetics: full-atom Lennard-Jones potential, hydrogen bonding, and electrostatics
+- Model training:
+  - Traditional ML models classifier and regressor:
+    - Random Forest
+    - XGBoost
+  - TODO: DNN model cards for FCN, CNN, GNN and transformer architectures
+- Model evaluation: Saves model performance metrics and visualizations
+  - scikit-learn compatible traditional ML models
+    - Classifier:
+      - Confusion matrix
+      - ROC curve
+      - Classification metrics: accuracy, precision, recall, F1-score, ROC-AUC
+    - Regression:
+      - Scatter plot of predictions vs true values
+      - Regression metrics: MSE, RMSE, MAE, R-squared, spearman correlation, kendall tau and pearson correlation
+    - Feature importance:
+      - Feature importance plots
+      - TODO: SHAP value plots
+  - TODO: PyTorch compatible deep learning models
 
 ## Package Structure
 
