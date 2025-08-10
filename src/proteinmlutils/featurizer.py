@@ -55,12 +55,15 @@ def protein_one_hot_encoder(sequence, max_length=None, flatten=True ):
 
 
 
-def protein_embedding_generator(sequence, max_length=None, embedding_dim=5, flatten=True):
+def protein_embedding_generator(sequence, max_length=None, embedding_dim=5, flatten=True, embedding_generator_weights=None):
     """
     Generates an embedding for a given protein sequence using PyTorch's nn.Embedding. These embeddings are generated from a random distribution. This is an alternative to one-hot encoding whose output is a large but sparse matrix. This embedding is dense and can be compressed to a given embedding dimension. It is likely to be more efficient for training deep neural networks.
     Args:
         sequence (str or list): The protein sequence to encode.
         max_length (int, optional): The maximum length of the sequence. Defaults to None.
+        embedding_dim (int, optional): The dimension of the embedding space. Defaults to 5.
+        flatten (bool, optional): Whether to flatten the output. Defaults to True.
+        embedding_generator_weights (np.ndarray, optional): Pre-trained weights for the embedding layer. Defaults to None.
 
     Returns:
         embedding_arr(np.ndarray): An embedding representation of the protein sequence.
@@ -76,9 +79,13 @@ def protein_embedding_generator(sequence, max_length=None, embedding_dim=5, flat
         sequence_index_list=[]
         for i, aa in enumerate(sequence):
             sequence_index_list.append(amino_acids_dict[aa])
+            
+        if embedding_generator_weights is not None:
+            embedding_generator = nn.Embedding(len(amino_acids), embedding_dim=embedding_dim, _weight=embedding_generator_weights)
+        else:
+            embedding_generator = nn.Embedding(len(amino_acids), embedding_dim=embedding_dim)
 
-        embedding_generator=nn.Embedding(len(amino_acids),embedding_dim=embedding_dim)
-        output=embedding_generator(torch.LongTensor(sequence_index_list))
+        output = embedding_generator(torch.LongTensor(sequence_index_list))
 
 
     elif isinstance(sequence, (list, np.ndarray)):
@@ -105,5 +112,5 @@ def protein_embedding_generator(sequence, max_length=None, embedding_dim=5, flat
     else:  #return the output as is
         output=output.detach().numpy()
 
-    return output, embedding_generator.weight.detach().numpy()
+    return output, embedding_generator.weight
     

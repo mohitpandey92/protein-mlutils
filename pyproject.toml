@@ -1,6 +1,6 @@
 #from proteinmlutils import __version__
 
-#version =0.0.1# __version__
+
 
 
 [build-system]
@@ -18,7 +18,7 @@ mypkg = ["*.csv"]
 
 [project]
 name = "proteinmlutils"
-version = "0.0.38"
+version = "0.39"
 dependencies = [
 'matplotlib',
 'pandas',
