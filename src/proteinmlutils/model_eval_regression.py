@@ -42,6 +42,7 @@ def save_plot_results(folder_name, model, y_pred, y_test, train_set=False):
         plt.close()
     else:
         plt.savefig(folder_name+'regression_results_test.png')
+        plt.close()
     return None
 
 
@@ -86,6 +87,7 @@ def feature_importance_plot(model, feature_columns, folder_name):
     plt.xlabel("Importance")
     plt.ylabel("Feature")
     plt.savefig(folder_name + "feature_importance.png")
+    plt.close()
     
 
 def save_regression_results(folder_name, model, y_pred, y_test, train_set=False, feature_columns=None):
