@@ -100,7 +100,10 @@ def protein_embedding_generator(sequence, max_length=None, embedding_dim=5, flat
                 sequence_index_list.append(amino_acids_dict[aa])
             sequence_index_big_list.append(sequence_index_list)
 
-        embedding_generator=nn.Embedding(len(amino_acids),embedding_dim=embedding_dim)
+        if embedding_generator_weights is not None:
+            embedding_generator = nn.Embedding(len(amino_acids), embedding_dim=embedding_dim, _weight=embedding_generator_weights)
+        else:
+            embedding_generator = nn.Embedding(len(amino_acids), embedding_dim=embedding_dim)
         #it's important to generate the
         output=embedding_generator(torch.LongTensor(sequence_index_big_list))
         
