@@ -130,3 +130,44 @@ class pytorch_model_template(pl.LightningModule):
             raise ValueError('model_type should be either regression or classification')
 
 
+
+
+
+class DictTensorDataset(Dataset):
+    '''
+    Custom Dataset for loading protein sequences and their labels
+    in a dictionary format.
+    X: A tensor or numpy array
+    y: A tensor or numpy array
+    type: "numpy" or "torch" indicating the type of input data
+    Output:
+    A dictionary with keys 'x' and 'y' for each sample.
+    '''
+    def __init__(self, X, y, type="numpy"):
+        
+        
+        #convert numpy arrays to torch tensors if they are not already
+        if type == "numpy":
+            self.X = torch.from_numpy(X).float()
+            self.y=torch.from_numpy(y_scaled_train_numpy).float()
+        elif type == "torch":
+            #raise warning if the tensors are not float
+            if self.X.dtype != torch.float32:
+                print("Warning: X is not float32, converting to float32")
+                self.X = self.X.float()
+            else:
+                self.X = self.X
+            if self.y.dtype != torch.float32:
+                print("Warning: y is not float32, converting to float32")
+                self.y = self.y.float()
+            else:
+                self.y = self.y
+        else:
+            raise ValueError("type should be either numpy or torch")
+
+    def __len__(self):
+        return len(self.X)
+
+    def __getitem__(self, idx):
+        
+        return {"x": self.X[idx], "y": self.y[idx]}
