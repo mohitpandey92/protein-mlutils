@@ -149,7 +149,7 @@ class DictTensorDataset(Dataset):
         #convert numpy arrays to torch tensors if they are not already
         if type == "numpy":
             self.X = torch.from_numpy(X).float()
-            self.y=torch.from_numpy(y_scaled_train_numpy).float()
+            self.y=torch.from_numpy(y).float()
         elif type == "torch":
             #raise warning if the tensors are not float
             if self.X.dtype != torch.float32:
