@@ -76,7 +76,6 @@ class pytorch_model_template(pl.LightningModule):
             dict_entry={"val_loss": val_loss, "val_spearman_corr":torch.mean(self.spearman_corr(logits, data['y'])), "manual_epoch": self.current_epoch}
         elif self.model_type == 'classification':
             raise NotImplementedError("Classification not implemented yet")
-            dict_entry={"val_loss": val_loss, "manual_epoch": self.current_epoch, "valid_F1_score":self.F1_score(y_pred, data['y'].long())}
         else:
             raise ValueError('model_type should be either regression or classification')    
         self.log_dict(dict_entry, on_epoch=True, on_step=True, prog_bar=True, sync_dist=True)
@@ -85,21 +84,20 @@ class pytorch_model_template(pl.LightningModule):
 
     def test_step(self, data):
         # this is the test loop
-        penultimate_layer = self.model_input(data)
-        y_pred = self.linear_layer(penultimate_layer)
-        test_loss = self.loss_fn(y_pred, data)
-        
+        logits = self.forward(data)
+        #y_pred = torch.argmax(logits, dim=1)
+        test_loss = self.loss_fn(logits, data)
+        # Logging to TensorBoard (if installed) by default
         if self.model_type == 'regression':
-            dict_log_entry={"test_loss": test_loss, "manual_epoch": self.current_epoch, "test_spearman_corr":torch.mean(self.spearman_corr(y_pred, data['y']))}
+            dict_entry={"test_loss": test_loss, "test_spearman_corr":torch.mean(self.spearman_corr(logits, data['y'])), "manual_epoch": self.current_epoch}
         elif self.model_type == 'classification':
-            dict_log_entry={"test_loss": test_loss, "manual_epoch": self.current_epoch, "test_F1_score":self.F1_score(y_pred, data['y'].long())}
-        
+            raise NotImplementedError("Classification not implemented yet")
         else:
-            raise ValueError('model_type should be either regression or classification')
-
-        self.log_dict(dict_log_entry, on_epoch=True, on_step=True, prog_bar=True, sync_dist=True)
+            raise ValueError('model_type should be either regression or classification')    
+        self.log_dict(dict_entry, on_epoch=True, on_step=True, prog_bar=True, sync_dist=True)
 
         return test_loss
+
 
     def configure_optimizers(self):
         '''
@@ -130,3 +128,44 @@ class pytorch_model_template(pl.LightningModule):
             raise ValueError('model_type should be either regression or classification')
 
 
+
+
+
+class DictTensorDataset(Dataset):
+    '''
+    Custom Dataset for loading protein sequences and their labels
+    in a dictionary format.
+    X: A tensor or numpy array
+    y: A tensor or numpy array
+    type: "numpy" or "torch" indicating the type of input data
+    Output:
+    A dictionary with keys 'x' and 'y' for each sample.
+    '''
+    def __init__(self, X, y, type="numpy"):
+        
+        
+        #convert numpy arrays to torch tensors if they are not already
+        if type == "numpy":
+            self.X = torch.from_numpy(X).float()
+            self.y=torch.from_numpy(y).float()
+        elif type == "torch":
+            #raise warning if the tensors are not float
+            if self.X.dtype != torch.float32:
+                print("Warning: X is not float32, converting to float32")
+                self.X = self.X.float()
+            else:
+                self.X = self.X
+            if self.y.dtype != torch.float32:
+                print("Warning: y is not float32, converting to float32")
+                self.y = self.y.float()
+            else:
+                self.y = self.y
+        else:
+            raise ValueError("type should be either numpy or torch")
+
+    def __len__(self):
+        return len(self.X)
+
+    def __getitem__(self, idx):
+        
+        return {"x": self.X[idx], "y": self.y[idx]}
