@@ -38,12 +38,17 @@ def start_mlflow_tracking_for_pytorch_lightning(location_db: str, experiment_nam
     os.environ["MLFLOW_TRACKING_URI"] = "sqlite:///" + location_db
     
     
-    mlflow.pytorch.autolog(log_models=False, log_every_n_epoch=1)
     mlflow.set_experiment(experiment_name)
-    with mlflow.start_run(run_name=run_name):
-        log_experiment_params(params_dict)
-        trainer.fit(model, train_dataloaders=train_loader, val_dataloaders=val_loader)
-        trainer.test(model, dataloaders=test_loader)
+    if trainer.global_rank == 0:
+        print(f"MLflow tracking server started at {location_db}")
+        mlflow.pytorch.autolog(log_models=False, log_every_n_epoch=1)
+    
+        with mlflow.start_run(run_name=run_name):
+            
+        
+            log_experiment_params(params_dict)
+            trainer.fit(model, train_dataloaders=train_loader, val_dataloaders=val_loader)
+            trainer.test(model, dataloaders=test_loader)
         
     mlflow.end_run()
 
