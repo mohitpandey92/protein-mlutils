@@ -54,8 +54,8 @@ def start_mlflow_tracking_for_pytorch_lightning(location_db: str, experiment_nam
             
         
             log_experiment_params(params_dict)
-        trainer.fit(model, train_dataloaders=train_loader, val_dataloaders=val_loader)
-        trainer.test(model, dataloaders=test_loader)
+    trainer.fit(model, train_dataloaders=train_loader, val_dataloaders=val_loader)
+    trainer.test(model, dataloaders=test_loader)
         
     mlflow.end_run()
 
