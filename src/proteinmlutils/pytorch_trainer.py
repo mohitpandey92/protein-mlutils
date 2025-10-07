@@ -38,7 +38,7 @@ class pytorch_model_template(pl.LightningModule):
         else:
             raise ValueError('model_type should be either regression or classification')
         
-        self.logger.log_hyperparams(hyperparams_dict)
+        self.log_hyperparams(hyperparams_dict)
 
     def forward(self, data):
         #TODO: Add docstring in sphinx format.
