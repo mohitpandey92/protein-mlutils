@@ -12,7 +12,7 @@ class pytorch_model_template(pl.LightningModule):
     '''
     The template for the PyTorch model.
     '''
-    def __init__(self, model_input, model_type='regression', num_heads=1, lr=1e-2, weight_decay=1e-3, weights=None, num_classes=None):
+    def __init__(self, model_input, model_type='regression', num_heads=1, lr=1e-2, weight_decay=1e-3, weights=None, num_classes=None, hyperparams_dict=None):
         #to do:
         #docstring
         #assert statement for dim_out that it needs to be 1 for regression and num_classes for classification.
@@ -37,6 +37,8 @@ class pytorch_model_template(pl.LightningModule):
             self.spearman_corr = torchmetrics.SpearmanCorrCoef(num_outputs=num_heads)
         else:
             raise ValueError('model_type should be either regression or classification')
+        
+        self.logger.log_hyperparams(hyperparams_dict)
 
     def forward(self, data):
         #TODO: Add docstring in sphinx format.

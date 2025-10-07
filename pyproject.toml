@@ -18,7 +18,7 @@ mypkg = ["*.csv"]
 
 [project]
 name = "proteinmlutils"
-version = "0.0.53"
+version = "0.0.54"
 dependencies = [
 'matplotlib',
 'pandas',
