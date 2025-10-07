@@ -39,7 +39,7 @@ def start_mlflow_tracking_for_pytorch_lightning(location_db: str, experiment_nam
     # For parameters that you want to log *outside* of autologging and before training starts, 
     # you must use the rank_zero_only utility or check the rank.
     if trainer.global_rank == 0:
-        #mlflow.set_experiment(experiment_name) 
+        mlflow.set_experiment(experiment_name) 
         with mlflow.start_run(run_name=run_name, experiment_id=mlflow.get_experiment_by_name(experiment_name).experiment_id):
                 mlflow.log_params(params_dict)
 
