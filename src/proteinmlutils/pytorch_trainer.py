@@ -22,6 +22,7 @@ class pytorch_model_template(pl.LightningModule):
         self.model_type = model_type
         self.num_classes = num_classes
         self.lr = lr
+        self.num_heads = num_heads
         self.weight_decay = weight_decay
         #self.latent_vector = latent_vector
         #self.dim_out = dim_out
@@ -121,7 +122,12 @@ class pytorch_model_template(pl.LightningModule):
         loss: The loss function
         '''
         if self.model_type == 'regression':
-            return nn.functional.mse_loss(y_pred, data["y"])
+            for head_i in range(self.num_heads):
+                if head_i == 0:
+                    loss = nn.functional.mse_loss(y_pred[:,head_i], data["y"][:,head_i])
+                else:
+                    loss += nn.functional.mse_loss(y_pred[:,head_i], data["y"][:,head_i])
+            return loss
         elif self.model_type == 'classification':
             return nn.functional.cross_entropy(y_pred, data['y'].long(), reduction='sum', weight=self.weights)
         else:
