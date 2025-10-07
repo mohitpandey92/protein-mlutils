@@ -127,6 +127,7 @@ class pytorch_model_template(pl.LightningModule):
                     loss = nn.functional.mse_loss(y_pred[:,head_i], data["y"][:,head_i])
                 else:
                     loss += nn.functional.mse_loss(y_pred[:,head_i], data["y"][:,head_i])
+                    #print(f"Head {head_i} loss: {nn.functional.mse_loss(y_pred[:,head_i], data['y'][:,head_i])}")
             return loss
         elif self.model_type == 'classification':
             return nn.functional.cross_entropy(y_pred, data['y'].long(), reduction='sum', weight=self.weights)

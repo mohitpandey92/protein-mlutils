@@ -49,15 +49,12 @@ def start_mlflow_tracking_for_pytorch_lightning(location_db: str, experiment_nam
     if trainer.global_rank == 0:
         print(f"MLflow tracking server started at {location_db}")
         mlflow.pytorch.autolog(log_models=False, log_every_n_epoch=1)
-    
-        with mlflow.start_run(run_name=run_name):
-            
-        
+        with mlflow.start_run(run_name=run_name, experiment_id=mlflow.get_experiment_by_name(experiment_name).experiment_id):
             log_experiment_params(params_dict)
     trainer.fit(model, train_dataloaders=train_loader, val_dataloaders=val_loader)
     trainer.test(model, dataloaders=test_loader)
         
-    mlflow.end_run()
+    #mlflow.end_run()
 
 
 
