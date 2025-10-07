@@ -31,7 +31,7 @@ def start_mlflow_tracking_for_pytorch_lightning(location_db: str, experiment_nam
         tracking_uri=os.environ["MLFLOW_TRACKING_URI"],
         # log_model=True or 'all' to log checkpoints
     )
-    mlflow.pytorch.autolog(log_models=False, disable=False)
+    #mlflow.pytorch.autolog(log_models=False, disable=False)
     
     # 4. Use the logger with the Trainer
     trainer.logger = mlf_logger 
