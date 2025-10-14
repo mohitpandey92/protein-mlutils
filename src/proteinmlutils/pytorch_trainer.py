@@ -40,13 +40,8 @@ class pytorch_model_template(pl.LightningModule):
 
     def forward(self, data):
         #TODO: Add docstring in sphinx format.
-        #ToDO: should we add linear layer here or in the base_model???
-        #penultimate_layer = self.model_input(data)
         logits=self.model_input(data['x'])
-        #logits = self.linear_layer(penultimate_layer)
         return logits
-
-    
 
     def training_step(self, data):
         logits = self.forward(data)
@@ -112,7 +107,7 @@ class pytorch_model_template(pl.LightningModule):
         #TODO: Why not self.optimizer = optim.Adam(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)?
         #I am not sure if it would work. 
         #Potential bug: It only updates the parameters of the model_input, not the linear layer.
-        optimizer = optim.Adadelta(self.model_input.parameters(), lr=self.lr, weight_decay=self.weight_decay)
+        optimizer = optim.Adadelta(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
         return optimizer
     
     def loss_fn(self, y_pred, data):
