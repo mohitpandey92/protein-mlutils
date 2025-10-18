@@ -44,6 +44,8 @@ class pytorch_model_template(pl.LightningModule):
         logits=self.model_input(data['x'])
         return logits
 
+    
+
     def training_step(self, data):
         logits = self.forward(data)
         #TO DO: don't assume that it's a classifier
