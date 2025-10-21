@@ -35,6 +35,7 @@ class pytorch_model_template(pl.LightningModule):
                 self.F1_score = torchmetrics.F1Score(num_classes=self.num_classes, average='macro', task='multiclass')
         elif self.model_type == 'regression':
             self.pearson_corr = torchmetrics.PearsonCorrCoef(num_outputs=num_heads)
+            self.r2_score = torchmetrics.R2Score(num_outputs=num_heads)
             #self.pearson_corr = torchmetrics.SpearmanCorrCoef(num_outputs=num_heads)
         else:
             raise ValueError('model_type should be either regression or classification')
@@ -54,7 +55,7 @@ class pytorch_model_template(pl.LightningModule):
         loss = self.loss_fn(logits, data)
         
         if self.model_type == 'regression': #todo: move it inside loss function.
-            dict_entry={"train_loss": loss, "train_pearson_corr":torch.mean(self.pearson_corr(logits, data['y'])), "manual_epoch": self.current_epoch}
+            dict_entry={"train_loss": loss, "train_pearson_corr":torch.mean(self.pearson_corr(logits, data['y'])), "train_r2_score":self.r2_score(logits, data['y']), "manual_epoch": self.current_epoch}
             #print(dict_entry)
         elif self.model_type == 'classification':
             raise NotImplementedError("Classification not implemented yet")
@@ -74,7 +75,7 @@ class pytorch_model_template(pl.LightningModule):
         val_loss = self.loss_fn(logits, data)
         # Logging to TensorBoard (if installed) by default
         if self.model_type == 'regression':
-            dict_entry={"val_loss": val_loss, "val_pearson_corr":torch.mean(self.pearson_corr(logits, data['y'])), "manual_epoch": self.current_epoch}
+            dict_entry={"val_loss": val_loss, "val_pearson_corr":torch.mean(self.pearson_corr(logits, data['y'])), "val_r2_score":self.r2_score(logits, data['y']), "manual_epoch": self.current_epoch}
         elif self.model_type == 'classification':
             raise NotImplementedError("Classification not implemented yet")
         else:
@@ -90,7 +91,7 @@ class pytorch_model_template(pl.LightningModule):
         test_loss = self.loss_fn(logits, data)
         # Logging to TensorBoard (if installed) by default
         if self.model_type == 'regression':
-            dict_entry={"test_loss": test_loss, "test_pearson_corr":torch.mean(self.pearson_corr(logits, data['y'])), "manual_epoch": self.current_epoch}
+            dict_entry={"test_loss": test_loss, "test_pearson_corr":torch.mean(self.pearson_corr(logits, data['y'])), "test_r2_score":self.r2_score(logits, data['y']), "manual_epoch": self.current_epoch}
         elif self.model_type == 'classification':
             raise NotImplementedError("Classification not implemented yet")
         else:
