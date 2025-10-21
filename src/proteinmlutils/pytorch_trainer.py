@@ -35,7 +35,7 @@ class pytorch_model_template(pl.LightningModule):
                 self.F1_score = torchmetrics.F1Score(num_classes=self.num_classes, average='macro', task='multiclass')
         elif self.model_type == 'regression':
             self.pearson_corr = torchmetrics.PearsonCorrCoef(num_outputs=num_heads)
-            self.r2_score = torchmetrics.R2Score(num_outputs=num_heads)
+            self.r2_score = torchmetrics.R2Score()
             #self.pearson_corr = torchmetrics.SpearmanCorrCoef(num_outputs=num_heads)
         else:
             raise ValueError('model_type should be either regression or classification')
