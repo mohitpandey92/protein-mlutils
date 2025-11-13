@@ -137,8 +137,6 @@ class pytorch_model_template(pl.LightningModule):
 
 
 
-
-
 class DictTensorDataset(Dataset):
     '''
     Custom Dataset for loading protein sequences and their labels
@@ -168,6 +166,11 @@ class DictTensorDataset(Dataset):
                 self.y = self.y.float()
             else:
                 self.y = self.y
+        
+        
+        elif type == "string":
+            self.X = X
+            self.y = torch.from_numpy(y).float()
         else:
             raise ValueError("type should be either numpy or torch")
 
