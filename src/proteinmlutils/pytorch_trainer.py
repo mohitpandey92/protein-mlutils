@@ -108,10 +108,7 @@ class pytorch_model_template(pl.LightningModule):
         Output:
         optimizer: The optimizer to be used
         '''
-        #TODO: Why not self.optimizer = optim.Adam(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)?
-        #I am not sure if it would work. 
-        #Potential bug: It only updates the parameters of the model_input, not the linear layer.
-        optimizer = optim.Adadelta(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
+        optimizer = optim.AdamW(self.model_input.parameters(), lr=self.lr, weight_decay=self.weight_decay)
         return optimizer
     
     def loss_fn(self, y_pred, data):
