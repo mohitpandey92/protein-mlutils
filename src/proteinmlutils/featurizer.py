@@ -52,7 +52,15 @@ def protein_one_hot_encoder(sequence, max_length=None, flatten=True ):
 
 
 
-
+def add_pad_to_seq(seq, target_length, pad_token="X"):
+    """Add padding to a sequence to reach the target length."""
+    current_length = len(seq)
+    if current_length >= target_length:
+        return seq[:target_length]
+    else:
+        padding_needed = target_length - current_length
+        padded_seq = seq + pad_token * padding_needed
+        return padded_seq
 
 
 def protein_embedding_generator(sequence, max_length=None, embedding_dim=5, flatten=True, embedding_generator_weights=None):
