@@ -120,13 +120,16 @@ class pytorch_model_template(pl.LightningModule):
         loss: The loss function
         '''
         if self.model_type == 'regression':
-            for head_i in range(self.num_heads):
-                if head_i == 0:
-                    loss = nn.functional.mse_loss(y_pred[:,head_i], data["y"][:,head_i])
-                else:
-                    loss += nn.functional.mse_loss(y_pred[:,head_i], data["y"][:,head_i])
-                    #print(f"Head {head_i} loss: {nn.functional.mse_loss(y_pred[:,head_i], data['y'][:,head_i])}")
-            return loss
+            if self.num_heads == 1:
+                return nn.functional.mse_loss(y_pred, data["y"])
+            else:
+                for head_i in range(self.num_heads):
+                    if head_i == 0:
+                        loss = nn.functional.mse_loss(y_pred[:,head_i], data["y"][:,head_i])
+                    else:
+                        loss += nn.functional.mse_loss(y_pred[:,head_i], data["y"][:,head_i])
+                        #print(f"Head {head_i} loss: {nn.functional.mse_loss(y_pred[:,head_i], data['y'][:,head_i])}")
+                return loss
         elif self.model_type == 'classification':
             return nn.functional.cross_entropy(y_pred, data['y'].long(), reduction='sum', weight=self.weights)
         else:
