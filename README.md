@@ -77,13 +77,22 @@ Once the package has been installed, this should work anywhere in the system:
 
 ## Usage
 ```python
-import protein_mlutils as pml
+import proteinmlutils.featurizer as protfeat
 
 # Example usage
-data = pml.load_data("data.csv")
-model = pml.train_model(data, model_type="random_forest")
-predictions = pml.make_predictions(model, data)
-pml.evaluate_model(model, data)
+protein_df=pd.read_csv("data.csv")
+sequence_arr = protein_df['protein_sequence'].tolist()
+y_arr = protein_df['DMS_score'].tolist()
+embedding_dim = 5  # Set the embedding dimension
+embedding_arr, embedding_weight=protfeat.protein_embedding_generator(sequence_arr, max_length, embedding_dim=embedding_dim, flatten=True, embedding_generator_weights=None)
+``` 
+
+```python
+from proteinmlutils import model_trainer
+n_iter=10
+clf_trainer = model_trainer.classifier_model_trainer(X_train, y_train, n_iter=n_iter)
+xgb_classifier, results_df = clf_trainer.XGBoostClassifier_trainer(training_mode="default", N_categories=2)
+y_pred = xgb_classifier.predict(X_test)
 ``` 
 
 ## Contributing
